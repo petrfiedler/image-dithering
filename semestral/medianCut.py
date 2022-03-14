@@ -62,6 +62,7 @@ def getColorPalette(im, bits):
 
     return colorPallete
 
+"""
 # open image
 currentPath = os.path.dirname(os.path.realpath(__file__))
 with Image.open(currentPath + "/inputImages/arcus.jpg") as img:
@@ -75,3 +76,5 @@ with Image.open(currentPath + "/inputImages/arcus.jpg") as img:
     im = Image.fromarray(im)
     img.show()
     im.show()
+
+"""
