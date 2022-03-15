@@ -1,9 +1,10 @@
 from PIL import Image
 import os
 import numpy as np
+import math
 from medianCut import getColorPalette
 
-imgName = "holenda"
+imgName = "arcus"
 numberOfBits = 8
 
 def applyError(error, rgb, distribution):
@@ -15,16 +16,12 @@ def applyError(error, rgb, distribution):
 
 
 def findClosestColor(pixel, colorPalette):
-    distances = {}
-
-    # find distance to each color
+    shortestDistance = float('inf')
     for color in colorPalette:
-        difference = np.subtract(pixel, color)
-        distance = np.linalg.norm(difference)
-        distances[color] = distance
-
-    # get the closest color
-    closestColor = min(distances, key=distances.get)
+        distance = math.dist(pixel, color)
+        if distance < shortestDistance:
+            closestColor = color
+            shortestDistance = distance
     return closestColor
 
 
@@ -40,7 +37,7 @@ with Image.open(currentPath + "/inputImages/" + imgName + ".jpg") as im:
     # apply Floyd-Steinberg dithering
     for y in range(height):
         for x in range(width):
-            old = pixels[x,y][0]
+            old = pixels[x,y]
             new = findClosestColor(old, colorPalette)
             pixels[x,y] = new
             error = np.subtract(old, new)
