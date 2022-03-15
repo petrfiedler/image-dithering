@@ -4,7 +4,7 @@ import numpy as np
 import math
 from medianCut import getColorPalette
 
-imgName = "arcus"
+imgName = "holenda"
 numberOfBits = 8
 
 def applyError(error, rgb, distribution):
@@ -57,10 +57,10 @@ with Image.open(currentPath + "/inputImages/" + imgName + ".jpg") as im:
                     pixels[x-1,y+1] = applyError(error, pixels[x-1,y+1], 3/16)
                 
                 # middle
-                pixels[x,y+1] = applyError(error, pixels[x,y+1], 3/16)
+                pixels[x,y+1] = applyError(error, pixels[x,y+1], 5/16)
 
                 # right
                 if x + 1 < width:
-                    pixels[x+1,y+1] = applyError(error, pixels[x+1,y+1], 3/16)
+                    pixels[x+1,y+1] = applyError(error, pixels[x+1,y+1], 1/16)
 
     im = im.save(currentPath + "/outputImages/" + imgName + ".png")
