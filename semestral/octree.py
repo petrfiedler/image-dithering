@@ -1,3 +1,5 @@
+import math
+
 def getOctant(color, level = 0):
     if level > 7:
         raise ValueError("Level must be smaller than 8.")
@@ -18,7 +20,10 @@ class Node:
     def addColor(self, color, level = 0):
         # node is empty
         if not self.isParent and not self.rgb:
-            self.rgb = color
+            self.isParent = True
+            octant = getOctant(color, level)
+            self.children[octant] = Node()
+            self.children[octant].rgb = color
             return
         # node has color but no children
         if not self.isParent and self.rgb:       
@@ -33,6 +38,15 @@ class Node:
             self.children[octant] = Node()
         self.children[octant].addColor(color, level + 1)
 
+    def getAllColors(self):
+        colors = []
+        if self.rgb:
+            colors.append(self.rgb)
+        for child in self.children:
+            if child:
+                colors += child.getAllColors()
+        return colors
+
 
     def print(self, level = 0):
         if self.rgb:
@@ -40,6 +54,28 @@ class Node:
         for child in self.children:
             if child:
                 child.print(level + 1)
+
+
+
+def findCandidates(subtree, color, level = 0):                                                                                                             
+    if subtree.rgb:
+        return [subtree.rgb]
+
+    octant = getOctant(color, level)
+    if subtree.children[octant]:
+        return findCandidates(subtree.children[octant], color, level + 1)
+    
+    else:
+        return subtree.getAllColors()
+
+def NNS(colorPalette, pixel):
+    shortestDistance = float('inf')
+    for color in colorPalette:
+        distance = math.dist(pixel, color)
+        if distance < shortestDistance:
+            closestColor = color
+            shortestDistance = distance
+    return closestColor
 
 class Octree:
     def __init__(self):
@@ -51,8 +87,14 @@ class Octree:
     def print(self):
         self.root.print()
 
+    def fill(self, palette):
+        for color in palette:
+            self.addColor(color)
+
     def findClosest(self, color):
+        if color[0] < 0 or color[1] < 0 or color[2] < 0 or color[0] > 255 or color[1] > 255 or color[2] > 255:
+            print(color)
         if not self.root.isParent:
             raise ValueError("Not enough colors in this palette.")
-        candidates = []
-
+        candidates = findCandidates(self.root, color)
+        return NNS(candidates, color)

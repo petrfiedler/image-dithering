@@ -3,7 +3,7 @@ import os
 import numpy as np
 import math
 from medianCut import getColorPalette
-from octree import Octree
+from octree import Octree, getOctant
 
 imgName = "arcus"
 numberOfBits = 3
@@ -15,6 +15,5 @@ with Image.open(currentPath + "/inputImages/" + imgName + ".jpg") as im:
     # get color palette
     colorPalette = getColorPalette(im, numberOfBits)
     oct = Octree()
-    for color in colorPalette:
-        oct.addColor(color)
-    oct.print()
+    oct.fill(colorPalette)
+    print(oct.findClosest((1,255,1)))
