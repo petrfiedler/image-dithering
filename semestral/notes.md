@@ -48,3 +48,18 @@
 -   výběr websafe barev
 -   případně paleta rovnoměrně rozložených barev
 -   hodně případně tvorba palety pomocí octree
+
+# GUI:
+
+## zobrazování obrázku
+
+-   bylo nečekaně složité vytvořit zoom, který navíc správně zobrazuje pixely
+
+## plány do budoucna
+
+-   vytvořit classy, hlavně pro canvas, kde dočasně využívám globální proměnné
+-   navíc to celé přepsat, zatím jsem napsal špagetový kód, jen aby to nějak fungovalo
+-   pohybování obrázku
+-   nastavení iniciální pozice na fit canvas
+-   tmavý vzhled
+-   zákaz moc zmenšeného okna
