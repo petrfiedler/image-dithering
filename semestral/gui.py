@@ -32,15 +32,23 @@ percentage = 1
 def setDefaultImageSize(img, cWidth, cHeight):
     # fit to width
     if cWidth / cHeight < img.size[0] / img.size[1]:
-        newWidth = cWidth
-        percent = (newWidth/float(img.size[0]))
+        percent = cWidth/float(img.size[0])
+        if percent > 1:
+            percent = math.floor(percent)
+        else:
+            percent = math.ceil(percent)
+        newWidth = int((float(img.size[0])*float(percent)))
         newHeight = int((float(img.size[1])*float(percent)))
         img = img.resize((newWidth,newHeight), resample=Image.NEAREST)
     # fit to height
     else:
-        newHeight = cHeight
-        percent = (newHeight/float(img.size[1]))
+        percent = cHeight/float(img.size[1])
+        if percent > 1:
+            percent = math.floor(percent)
+        else:
+            percent = math.ceil(percent)
         newWidth = int((float(img.size[0])*float(percent)))
+        newHeight = int((float(img.size[1])*float(percent)))
         img = img.resize((newWidth,newHeight), resample=Image.NEAREST)
     return img
 
