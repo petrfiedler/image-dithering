@@ -1,9 +1,9 @@
 from PIL import Image
 from pathlib import Path
 import numpy as np
-from scipy.spatial import KDTree
 
 from app.src.colorpalette import median_cut
+from app.src.dithering import floyd_steinberg
 
 # path to the input image
 IMAGE_NAME = 'holenda'
@@ -18,10 +18,8 @@ with Image.open(imgPath) as img:
 # get color palette
 palette = median_cut.generate(imgData, 5)
 
-# kdtree
-paletteTree = KDTree(palette)
-i = paletteTree.query([255, 255, 255])[1]
-print(palette[i])
+# dither the image
+imgDith = floyd_steinberg.dither(imgData, palette)
 
 # show the image
-Image.fromarray(imgData.astype(np.uint8), 'RGB').show()
+Image.fromarray(imgDith.astype(np.uint8), 'RGB').show()
