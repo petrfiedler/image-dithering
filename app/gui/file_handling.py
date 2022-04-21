@@ -21,15 +21,14 @@ def selectFile(self):
     if self.filePath:
         fileNameShort = re.findall(r'/[^/]+$', self.filePath)[0][1:]
         self.l_selectedFile.config(text=fileNameShort)
-        self.loadImage()
+        self._loadImage()
 
 
 def loadImage(self):
     try:
         with Image.open(self.filePath) as img:
             self.imgData = np.asarray(img)
-            # ! DEBUG:
-            Image.fromarray(self.imgData.astype(np.uint8), 'RGB').show()
+            self._displayImageFromArray(self.imgData)
     # TODO: more specific error messages
     except Exception as e:
         print(f"Error while selecting image: {e}")

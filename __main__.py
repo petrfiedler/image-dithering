@@ -1,4 +1,4 @@
 from app.gui.window import Window
 
-window = Window()
+window = Window(name='Image Dithering')
 window.show()
