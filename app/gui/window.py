@@ -6,7 +6,7 @@ from tkinter import (Tk,
                      Event,
                      NW)
 
-from app.gui import (file_handling, image_view)
+from app.gui import (file_handling, image_view, control_panel)
 
 
 class Window:
@@ -14,15 +14,24 @@ class Window:
     # imported methods
     _selectFile = file_handling.selectFile
     _loadImage = file_handling.loadImage
+
     _renderImage = image_view.renderImage
     _displayImageFromArray = image_view.displayImageFromArray
     _setDefaultImgZoom = image_view.setDefaultImgZoom
     _cropOutOfRender = image_view.cropOutOfRender
     _imageMouseWheel = image_view.imageMouseWheel
 
+    _bindControlPanel = control_panel.bindControlPanel
+    _bindPalettePicker = control_panel.bindPalettePicker
+    _updatePalettePicker = control_panel.updatePalettePicker
+    _bindDitheringPicker = control_panel.bindDitheringPicker
+    _bindSubmit = control_panel.bindSubmit
+
     def __init__(self, name: str = 'Window') -> None:
         # instance variables
         self.displayedImg = None
+        self.palettes = ["Median Cut", "Bit Stripping"]
+        self.ditherings = ["Floyd-Steinberg", "Jarvis", "Stucki"]
 
         # initial settings
         self.root = Tk()
@@ -34,6 +43,7 @@ class Window:
         self._configureFrames()
         self._bindCanvas()
         self._bindFileSelector()
+        self._bindControlPanel()
 
         # bind events
         self.root.bind("<Configure>", self._windowResize)
