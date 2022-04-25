@@ -1,11 +1,7 @@
 from tkinter import (
     Tk,
     Frame,
-    Canvas,
-    Button,
-    Label,
-    Event,
-    NW
+    Canvas
 )
 
 from app.gui import (
@@ -28,7 +24,9 @@ class Window:
     _setDefaultImgZoom = image_view.setDefaultImgZoom
     _cropOutOfRender = image_view.cropOutOfRender
     _imageMouseWheel = image_view.imageMouseWheel
+    _windowResize = image_view.windowResize
 
+    _bindFileSelector = control_panel.bindFileSelector
     _bindControlPanel = control_panel.bindControlPanel
     _bindPalettePicker = control_panel.bindPalettePicker
     _updatePalettePicker = control_panel.updatePalettePicker
@@ -54,7 +52,6 @@ class Window:
         # bind components
         self._configureFrames()
         self._bindCanvas()
-        self._bindFileSelector()
         self._bindControlPanel()
 
         # bind events
@@ -85,23 +82,6 @@ class Window:
         """ Bind canvas element to main window. """
         self.canvas = Canvas(self.rFrame, bg="#1e1e1e")
         self.canvas.grid(row=0, column=0, sticky="nswe", padx=20, pady=20)
-
-    def _bindFileSelector(self) -> None:
-        """ Bind file selector to main window. """
-        # button for file selection
-        self.b_selectFile = Button(
-            self.lFrame, text='Select image',  command=self._selectFile)
-        self.b_selectFile.pack(side="top", anchor=NW, padx=10, pady=10)
-
-        # label with selected file name
-        self.l_selectedFile = Label(self.lFrame, text="File not selected",
-                                    font=('TkDefaultFont', 8))
-        self.l_selectedFile.pack(side="top", anchor=NW, padx=10, pady=10)
-
-    def _windowResize(self, _: Event) -> None:
-        """ Adjust displayed image to resized window. """
-        if self.displayedImg is not None:
-            self._renderImage()
 
     def show(self) -> None:
         """ Show window with user interface. """

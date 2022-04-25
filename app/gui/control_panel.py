@@ -10,9 +10,23 @@ from tkinter.ttk import Separator
 
 def bindControlPanel(self):
     """ Bind control panel to main window. """
+    self._bindFileSelector()
     self._bindPalettePicker()
     self._bindDitheringPicker()
     self._bindSubmit()
+
+
+def bindFileSelector(self) -> None:
+    """ Bind file selector to main window. """
+    # button for file selection
+    self.b_selectFile = Button(
+        self.lFrame, text='Select image',  command=self._selectFile)
+    self.b_selectFile.pack(side="top", anchor=NW, padx=10, pady=10)
+
+    # label with selected file name
+    self.l_selectedFile = Label(self.lFrame, text="File not selected",
+                                font=('TkDefaultFont', 8))
+    self.l_selectedFile.pack(side="top", anchor=NW, padx=10, pady=10)
 
 
 def bindPalettePicker(self):
@@ -42,7 +56,6 @@ def bindPalettePicker(self):
 
 def updatePalettePicker(self, option):
     """ Update palette picker options based on picked palette. """
-    print(f"Selected: {option}")
     for element in self.paletteOptions.winfo_children():
         element.destroy()
 

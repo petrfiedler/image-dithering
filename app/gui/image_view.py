@@ -102,3 +102,9 @@ def imageMouseWheel(self, event: Event) -> None:
             if self.imgZoom > 1:
                 self.imgZoom = math.ceil(self.imgZoom)
             self._renderImage()
+
+
+def windowResize(self, _: Event) -> None:
+    """ Adjust displayed image to resized window. """
+    if self.displayedImg is not None:
+        self._renderImage()
