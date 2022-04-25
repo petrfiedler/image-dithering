@@ -29,9 +29,17 @@ def loadImage(self):
         with Image.open(self.filePath) as img:
             self.imgData = np.asarray(img)
             self._displayImageFromArray(self.imgData)
+            self.b_submit["text"] = "Dither"
             self.b_submit["state"] = "active"
     # TODO: more specific error messages
     except Exception as e:
         print(f"Error while selecting image: {e}")
         self.l_selectedFile.config(text="Invalid file!")
         self.b_submit["state"] = "disabled"
+
+
+def saveImage(self):
+    # TODO: test with less permissions
+    with fd.asksaveasfile(mode='w', defaultextension=".png") as file:
+        img = Image.fromarray(self.imgDith.astype(np.uint8), 'RGB')
+        img.save(file.name)

@@ -4,6 +4,12 @@ from threading import Thread
 
 
 def pressSubmit(self):
+    # save image
+    if self.b_submit["text"] == "Save Image":
+        self._saveImage()
+        return
+
+    # process image
     self.b_submit["text"] = "Processing..."
     self.b_submit["state"] = "disabled"
 
@@ -12,7 +18,7 @@ def pressSubmit(self):
 
 
 def processingDone(self):
-    self.b_submit["text"] = "Dither"
+    self.b_submit["text"] = "Save Image"
     self.b_submit["state"] = "active"
 
     self._displayImageFromArray(self.imgDith)

@@ -21,6 +21,7 @@ class Window:
     # imported methods
     _selectFile = file_handling.selectFile
     _loadImage = file_handling.loadImage
+    _saveImage = file_handling.saveImage
 
     _renderImage = image_view.renderImage
     _displayImageFromArray = image_view.displayImageFromArray
@@ -38,7 +39,7 @@ class Window:
     _processImage = processing.processImage
     _processingDone = processing.processingDone
 
-    def __init__(self, name: str = 'Window') -> None:
+    def __init__(self, name: str = "Window") -> None:
         # instance variables
         self.displayedImg = None
         self.palettes = ["Median Cut", "Bit Stripping"]
