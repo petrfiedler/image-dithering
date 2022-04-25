@@ -5,20 +5,24 @@ from tkinter import (Label,
                      Button,
                      Scale,
                      NW, NE)
+from tkinter.ttk import Separator
 
 
 def bindControlPanel(self):
     """ Bind control panel to main window. """
     self._bindPalettePicker()
-    self._bindSubmit()
     self._bindDitheringPicker()
+    self._bindSubmit()
 
 
 def bindPalettePicker(self):
     """ Bind palette picker to main window. """
+    separator = Separator(self.lFrame, orient='horizontal')
+    separator.pack(fill='x', pady=30)
+
     self.l_palettePicker = Label(self.lFrame, text="Color palette:",
                                  font=('TkDefaultFont', 12))
-    self.l_palettePicker.pack(side="top", anchor=NW, padx=10, pady=(30, 0))
+    self.l_palettePicker.pack(side="top", anchor=NW, padx=10)
 
     # dropdown menu
     self.pickedPalette = StringVar()
@@ -57,9 +61,12 @@ def updatePalettePicker(self, option):
 
 def bindDitheringPicker(self):
     """ Bind dithering picker to main window. """
+    separator = Separator(self.lFrame, orient='horizontal')
+    separator.pack(fill='x', pady=30)
+
     self.l_ditheringPicker = Label(self.lFrame, text="Dithering algorithm:",
                                    font=('TkDefaultFont', 12))
-    self.l_ditheringPicker.pack(side="top", anchor=NW, padx=10, pady=(30, 0))
+    self.l_ditheringPicker.pack(side="top", anchor=NW, padx=10)
 
     # dropdown menu
     self.pickedDithering = StringVar()
@@ -73,4 +80,4 @@ def bindDitheringPicker(self):
 def bindSubmit(self):
     """ Bind submit button to main window. """
     self.b_submit = Button(self.lFrame, text="Dither")
-    self.b_submit.pack(side="bottom", anchor=NE, padx=10)
+    self.b_submit.pack(side="bottom", anchor=NE, padx=10, pady=40)
