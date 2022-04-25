@@ -79,5 +79,7 @@ def bindDitheringPicker(self):
 
 def bindSubmit(self):
     """ Bind submit button to main window. """
-    self.b_submit = Button(self.lFrame, text="Dither")
+    self.b_submit = Button(self.lFrame, text="Dither",
+                           command=self._pressSubmit)
+    self.b_submit["state"] = "disabled"
     self.b_submit.pack(side="bottom", anchor=NE, padx=10, pady=40)

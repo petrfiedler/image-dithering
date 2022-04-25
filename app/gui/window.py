@@ -1,12 +1,19 @@
-from tkinter import (Tk,
-                     Frame,
-                     Canvas,
-                     Button,
-                     Label,
-                     Event,
-                     NW)
+from tkinter import (
+    Tk,
+    Frame,
+    Canvas,
+    Button,
+    Label,
+    Event,
+    NW
+)
 
-from app.gui import (file_handling, image_view, control_panel)
+from app.gui import (
+    file_handling,
+    image_view,
+    control_panel,
+    processing
+)
 
 
 class Window:
@@ -26,6 +33,10 @@ class Window:
     _updatePalettePicker = control_panel.updatePalettePicker
     _bindDitheringPicker = control_panel.bindDitheringPicker
     _bindSubmit = control_panel.bindSubmit
+
+    _pressSubmit = processing.pressSubmit
+    _processImage = processing.processImage
+    _processingDone = processing.processingDone
 
     def __init__(self, name: str = 'Window') -> None:
         # instance variables

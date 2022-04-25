@@ -29,7 +29,9 @@ def loadImage(self):
         with Image.open(self.filePath) as img:
             self.imgData = np.asarray(img)
             self._displayImageFromArray(self.imgData)
+            self.b_submit["state"] = "active"
     # TODO: more specific error messages
     except Exception as e:
         print(f"Error while selecting image: {e}")
         self.l_selectedFile.config(text="Invalid file!")
+        self.b_submit["state"] = "disabled"
