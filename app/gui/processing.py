@@ -12,14 +12,18 @@ def pressSubmit(self):
     # process image
     self.b_submit["text"] = "Processing..."
     self.b_submit["state"] = "disabled"
+    self.b_selectFile["state"] = "disabled"
+    self.l_submit["text"] = "This might take a while."
 
     process = Thread(target=self._processImage, daemon=True)
     process.start()
 
 
 def processingDone(self):
+    self.b_selectFile["state"] = "active"
     self.b_submit["text"] = "Save Image"
     self.b_submit["state"] = "active"
+    self.l_submit["text"] = "Dithering done."
 
     self._displayImageFromArray(self.imgDith)
 
