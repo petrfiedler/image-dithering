@@ -82,4 +82,6 @@ def bindSubmit(self):
     self.b_submit = Button(self.lFrame, text="Dither",
                            command=self._pressSubmit)
     self.b_submit["state"] = "disabled"
-    self.b_submit.pack(side="bottom", anchor=NE, padx=10, pady=40)
+    self.l_submit = Label(self.lFrame)
+    self.l_submit.pack(side="bottom", anchor=NE, padx=10, pady=(10, 10))
+    self.b_submit.pack(side="bottom", anchor=NE, padx=10, pady=(128, 0))
