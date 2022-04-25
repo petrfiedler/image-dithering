@@ -8,7 +8,8 @@ from app.gui import (
     file_handling,
     image_view,
     control_panel,
-    processing
+    processing,
+    styles
 )
 
 
@@ -37,6 +38,9 @@ class Window:
     _processImage = processing.processImage
     _processingDone = processing.processingDone
 
+    _loadStyleConstants = styles.loadStyleConstants
+    _applyStyles = styles.applyStyles
+
     def __init__(self, name: str = "Window") -> None:
         # instance variables
         self.displayedImg = None
@@ -48,11 +52,14 @@ class Window:
         self.root.title(name)
         self.root.geometry("1024x720")
         self.root.minsize(1024, 720)
+        self._loadStyleConstants()
 
         # bind components
         self._configureFrames()
         self._bindCanvas()
         self._bindControlPanel()
+
+        self._applyStyles()
 
         # bind events
         self.root.bind("<Configure>", self._windowResize)
@@ -80,7 +87,7 @@ class Window:
 
     def _bindCanvas(self) -> None:
         """ Bind canvas element to main window. """
-        self.canvas = Canvas(self.rFrame, bg="#1e1e1e")
+        self.canvas = Canvas(self.rFrame)
         self.canvas.grid(row=0, column=0, sticky="nswe", padx=20, pady=20)
 
     def show(self) -> None:

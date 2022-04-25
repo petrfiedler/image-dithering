@@ -24,8 +24,7 @@ def bindFileSelector(self) -> None:
     self.b_selectFile.pack(side="top", anchor=NW, padx=10, pady=10)
 
     # label with selected file name
-    self.l_selectedFile = Label(self.lFrame, text="File not selected",
-                                font=('TkDefaultFont', 8))
+    self.l_selectedFile = Label(self.lFrame, text="File not selected")
     self.l_selectedFile.pack(side="top", anchor=NW, padx=10, pady=10)
 
 
@@ -34,8 +33,7 @@ def bindPalettePicker(self):
     separator = Separator(self.lFrame, orient='horizontal')
     separator.pack(fill='x', pady=30)
 
-    self.l_palettePicker = Label(self.lFrame, text="Color palette:",
-                                 font=('TkDefaultFont', 12))
+    self.l_palettePicker = Label(self.lFrame, text="Color palette:")
     self.l_palettePicker.pack(side="top", anchor=NW, padx=10)
 
     # dropdown menu
@@ -60,15 +58,24 @@ def updatePalettePicker(self, option):
         element.destroy()
 
     if option == "Median Cut":
+        # median cut label
         self.l_paletteOptions = Label(self.paletteOptions,
-                                      text="Number of bits:",
-                                      font=('TkDefaultFont', 8))
+                                      text="Number of bits:")
+        self.l_paletteOptions.config(
+            font=('TkDefaultFont', 8),
+            bg=self.BG,
+            fg=self.FG
+        )
         self.l_paletteOptions.pack(
             side="top", anchor=NW, padx=10, pady=(10, 0))
 
-        self.s_palleteOptions = Scale(
-            self.paletteOptions, from_=1, to=16, length=256,
-            orient="horizontal")
+        # median cut scale
+        self.s_palleteOptions = Scale(self.paletteOptions, from_=1, to=16)
+        self.s_palleteOptions.config(
+            length=256,
+            orient="horizontal",
+            bg=self.BG, fg=self.FG, highlightthickness=0,
+            sliderrelief="flat", activebackground=self.BG)
         self.s_palleteOptions.pack(side="top", anchor=NW, padx=10)
 
 
@@ -77,8 +84,7 @@ def bindDitheringPicker(self):
     separator = Separator(self.lFrame, orient='horizontal')
     separator.pack(fill='x', pady=30)
 
-    self.l_ditheringPicker = Label(self.lFrame, text="Dithering algorithm:",
-                                   font=('TkDefaultFont', 12))
+    self.l_ditheringPicker = Label(self.lFrame, text="Dithering algorithm:")
     self.l_ditheringPicker.pack(side="top", anchor=NW, padx=10)
 
     # dropdown menu
