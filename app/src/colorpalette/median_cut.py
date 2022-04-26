@@ -32,6 +32,7 @@ def averageColors(buckets: list) -> np.ndarray:
     for bucket in buckets:
         average = np.mean(bucket, axis=0)
         palette = np.vstack([palette, average])
+    palette = palette[1:, :]
     return palette.astype(np.uint8)
 
 
@@ -46,6 +47,8 @@ def generate(img: np.ndarray, bits: int) -> np.ndarray:
         np.ndarray: color palette
     """
     pixels = img.reshape(-1, 3)
+    if pixels.size <= 2**bits:
+        return pixels
     buckets = [pixels]
 
     # create 2**bits buckets (each iteration splits each bucket in half)
