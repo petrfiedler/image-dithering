@@ -1,4 +1,4 @@
-from app.src.colorpalette import median_cut
+from app.src.colorpalette import (median_cut, constants)
 from app.src.dithering import floyd_steinberg
 from threading import Thread
 import sys
@@ -65,9 +65,12 @@ def processingDone(self):
 
 
 def processImage(self):
-    # ! ALGORITHM CHOICE NOT YET SUPPORTED
     # get color palette
-    palette = median_cut.generate(self.imgData, self.s_palleteOptions.get())
+    if self.pickedPalette.get() == "Websafe":
+        palette = constants.WEBSAFE_PALETTE
+    if self.pickedPalette.get() == "Median Cut":
+        palette = median_cut.generate(
+            self.imgData, self.s_palleteOptions.get())
     # dither the image
     self.imgDith = floyd_steinberg.dither(self.imgData, palette)
 

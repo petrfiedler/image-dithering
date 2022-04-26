@@ -48,8 +48,16 @@ class Window:
         # instance variables
         self.displayedImg = None
         self.imgData = None
-        self.palettes = ["Median Cut", "Bit Stripping"]
-        self.ditherings = ["Floyd-Steinberg", "Jarvis", "Stucki"]
+        self.palettes = [
+            "Websafe",
+            "Median Cut",
+            "Bit Stripping"
+        ]
+        self.ditherings = [
+            "Floyd-Steinberg",
+            "Jarvis",
+            "Stucki"
+        ]
 
         # initial settings
         self.root = Tk()
