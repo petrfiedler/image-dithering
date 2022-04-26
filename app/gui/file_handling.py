@@ -32,6 +32,7 @@ def loadImage(self):
             self.b_submit["text"] = "Dither"
             self.b_submit["state"] = "active"
             self.l_submit["text"] = ""
+            self.b_reset["state"] = "active"
     except Exception as e:
         print(f"Error while selecting image: {e}")
         self.l_selectedFile.config(text="Invalid file.")

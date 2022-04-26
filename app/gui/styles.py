@@ -124,6 +124,21 @@ def applyStyles(self):
         self.om_ditheringPicker.configure(image=self.imgDownArrow)
     )
 
+    # buttons frame
+    self.f_buttons.config(
+        bg=self.BG
+    )
+
+    # reset button
+    self.b_reset.config(
+        bg=self.BG,
+        fg=self.FG,
+        activebackground=self.BG_DARKER,
+        activeforeground=self.FG,
+        borderwidth=0,
+        highlightbackground=self.BG_DARKER
+    )
+
     # submit button
     self.b_submit.config(
         bg=self.BG,

@@ -33,10 +33,13 @@ class Window:
     _updatePalettePicker = control_panel.updatePalettePicker
     _bindDitheringPicker = control_panel.bindDitheringPicker
     _bindSubmit = control_panel.bindSubmit
+    _bindReset = control_panel.bindReset
+    _bindButtons = control_panel.bindButtons
 
     _pressSubmit = processing.pressSubmit
     _processImage = processing.processImage
     _processingDone = processing.processingDone
+    _reset = processing.reset
 
     _loadStyleConstants = styles.loadStyleConstants
     _applyStyles = styles.applyStyles
@@ -44,6 +47,7 @@ class Window:
     def __init__(self, name: str = "Window") -> None:
         # instance variables
         self.displayedImg = None
+        self.imgData = None
         self.palettes = ["Median Cut", "Bit Stripping"]
         self.ditherings = ["Floyd-Steinberg", "Jarvis", "Stucki"]
 

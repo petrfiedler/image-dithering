@@ -4,7 +4,7 @@ from tkinter import (Label,
                      Frame,
                      Button,
                      Scale,
-                     NW, NE)
+                     NW)
 from tkinter.ttk import Separator
 
 
@@ -13,6 +13,8 @@ def bindControlPanel(self):
     self._bindFileSelector()
     self._bindPalettePicker()
     self._bindDitheringPicker()
+    self._bindButtons()
+    self._bindReset()
     self._bindSubmit()
 
 
@@ -70,7 +72,7 @@ def updatePalettePicker(self, option):
             side="top", anchor=NW, padx=10, pady=(10, 0))
 
         # median cut scale
-        self.s_palleteOptions = Scale(self.paletteOptions, from_=1, to=16)
+        self.s_palleteOptions = Scale(self.paletteOptions, from_=1, to=10)
         self.s_palleteOptions.config(
             length=256,
             orient="horizontal",
@@ -96,11 +98,30 @@ def bindDitheringPicker(self):
     self.om_ditheringPicker.pack(side="top", anchor=NW, padx=10, pady=10)
 
 
+def bindButtons(self):
+    separator = Separator(self.lFrame, orient='horizontal')
+    separator.pack(fill='x', pady=30)
+    self.f_buttons = Frame(self.lFrame)
+    self.f_buttons.columnconfigure(0, weight=1)
+    self.f_buttons.columnconfigure(1, weight=1)
+    self.f_buttons.rowconfigure(0)
+    self.f_buttons.rowconfigure(1)
+    self.f_buttons.pack(side="top", anchor=NW, fill='x')
+
+
 def bindSubmit(self):
     """ Bind submit button to main window. """
-    self.b_submit = Button(self.lFrame, text="Dither",
+    self.b_submit = Button(self.f_buttons, text="Dither",
                            command=self._pressSubmit)
     self.b_submit["state"] = "disabled"
-    self.l_submit = Label(self.lFrame)
-    self.l_submit.pack(side="bottom", anchor=NE, padx=10, pady=(10, 10))
-    self.b_submit.pack(side="bottom", anchor=NE, padx=10, pady=(128, 0))
+    self.b_submit.grid(row=0, column=1, sticky="e")
+    self.l_submit = Label(self.f_buttons)
+    self.l_submit.grid(row=1, column=1, columnspan=2, sticky="e", pady=10)
+
+
+def bindReset(self) -> None:
+    """ Bind reset button to main window. """
+    self.b_reset = Button(
+        self.f_buttons, text='Reset Image',  command=self._reset,
+        state="disabled")
+    self.b_reset.grid(row=0, column=0, sticky="w")
