@@ -1,4 +1,5 @@
 from tkinter import (RIGHT, PhotoImage)
+from pathlib import Path
 
 
 def loadStyleConstants(self):
@@ -8,10 +9,11 @@ def loadStyleConstants(self):
     self.FG = "#ffffff"
 
     # menu indicator icons
+    currentDir = Path(__file__).parent.resolve()
     self.imgDownArrow = PhotoImage(
-        master=self.root, file="app/gui/img/dwn.png")
+        master=self.root, file=f"{currentDir}/img/dwn.png")
     self.imgUpArrow = PhotoImage(
-        master=self.root, file="app/gui/img/up.png")
+        master=self.root, file=f"{currentDir}/img/up.png")
 
 
 def applyStyles(self):
