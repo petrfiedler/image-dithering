@@ -18,7 +18,7 @@ def findClosestColor(pixel: np.ndarray, palette: np.ndarray,
     return palette[index]
 
 
-def applyError(error: int, pixel: np.ndarray,
+def applyError(error: np.ndarray, pixel: np.ndarray,
                distribution: float) -> np.ndarray:
     """Apply color quantization error to a pixel.
 
@@ -33,6 +33,7 @@ def applyError(error: int, pixel: np.ndarray,
     error = distribution * error
     error = np.around(error, decimals=0)
     newShade = pixel + error
+    newShade = newShade.clip(0, 255)
     return newShade
 
 
@@ -68,7 +69,6 @@ def dither(img: np.ndarray, palette: np.ndarray) -> np.ndarray:
             # top right
             if x + 1 < width:
                 img[y, x+1] = applyError(error, img[y, x+1], 7/16)
-
             # bottom
             if y + 1 < height:
                 # left
