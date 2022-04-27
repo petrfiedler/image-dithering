@@ -161,3 +161,8 @@ def applyStyles(self):
     self.paletteOptions.config(
         bg=self.BG
     )
+
+    # dithering options frame
+    self.ditheringOptions.config(
+        bg=self.BG
+    )

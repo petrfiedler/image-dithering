@@ -3,7 +3,7 @@ from app.src.colorpalette import (
     bit_stripping,
     constants
 )
-from app.src.dithering import floyd_steinberg
+from app.src.dithering import error_diffusion
 from threading import Thread
 import sys
 
@@ -85,7 +85,9 @@ def processImage(self):
         raise NotImplementedError("No support for this color palette.")
 
     # dither the image
-    self.imgDith = floyd_steinberg.dither(self.imgData, palette)
+    if self.pickedDithering.get() == "Error Diffusion":
+        map = self.pickedDitheringOption.get()
+        self.imgDith = error_diffusion.dither(self.imgData, palette, map)
 
     self._processingDone()
 

@@ -32,6 +32,7 @@ class Window:
     _bindPalettePicker = control_panel.bindPalettePicker
     _updatePalettePicker = control_panel.updatePalettePicker
     _bindDitheringPicker = control_panel.bindDitheringPicker
+    _updateDitheringPicker = control_panel.updateDitheringPicker
     _bindSubmit = control_panel.bindSubmit
     _bindReset = control_panel.bindReset
     _bindButtons = control_panel.bindButtons
@@ -54,9 +55,7 @@ class Window:
             "Median Cut"
         ]
         self.ditherings = [
-            "Floyd-Steinberg",
-            "Jarvis",
-            "Stucki"
+            "Error Diffusion"
         ]
 
         # initial settings
