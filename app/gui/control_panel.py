@@ -59,6 +59,28 @@ def updatePalettePicker(self, option):
     for element in self.paletteOptions.winfo_children():
         element.destroy()
 
+    if option == "Bit Stripping":
+        # bit stripping label
+        self.l_paletteOptions = Label(self.paletteOptions,
+                                      text="Stripping level:")
+        self.l_paletteOptions.config(
+            font=('TkDefaultFont', 8),
+            bg=self.BG,
+            fg=self.FG
+        )
+        self.l_paletteOptions.pack(
+            side="top", anchor=NW, padx=10, pady=(10, 0))
+
+        # bit stripping scale
+        self.s_palleteOptions = Scale(self.paletteOptions, from_=1, to=7)
+        self.s_palleteOptions.set(5)
+        self.s_palleteOptions.config(
+            length=256,
+            orient="horizontal",
+            bg=self.BG, fg=self.FG, highlightthickness=0,
+            sliderrelief="flat", activebackground=self.BG)
+        self.s_palleteOptions.pack(side="top", anchor=NW, padx=10)
+
     if option == "Median Cut":
         # median cut label
         self.l_paletteOptions = Label(self.paletteOptions,
@@ -73,6 +95,7 @@ def updatePalettePicker(self, option):
 
         # median cut scale
         self.s_palleteOptions = Scale(self.paletteOptions, from_=1, to=10)
+        self.s_palleteOptions.set(5)
         self.s_palleteOptions.config(
             length=256,
             orient="horizontal",
@@ -112,9 +135,9 @@ def bindButtons(self):
 def bindSubmit(self):
     """ Bind submit button to main window. """
     self.b_submit = Button(self.f_buttons, text="Dither",
-                           command=self._pressSubmit)
+                           command=self._pressSubmit, width=10)
     self.b_submit["state"] = "disabled"
-    self.b_submit.grid(row=0, column=1, sticky="e")
+    self.b_submit.grid(row=0, column=1, sticky="e", padx=(40, 0))
     self.l_submit = Label(self.f_buttons)
     self.l_submit.grid(row=1, column=1, columnspan=2, sticky="e", pady=10)
 

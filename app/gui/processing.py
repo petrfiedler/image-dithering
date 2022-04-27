@@ -1,4 +1,8 @@
-from app.src.colorpalette import (median_cut, constants)
+from app.src.colorpalette import (
+    median_cut,
+    bit_stripping,
+    constants
+)
 from app.src.dithering import floyd_steinberg
 from threading import Thread
 import sys
@@ -66,11 +70,20 @@ def processingDone(self):
 
 def processImage(self):
     # get color palette
-    if self.pickedPalette.get() == "Websafe":
+    if self.pickedPalette.get() == "Bit Stripping":
+        palette = bit_stripping.generate(
+            self.imgData, self.s_palleteOptions.get())
+
+    elif self.pickedPalette.get() == "Websafe":
         palette = constants.WEBSAFE_PALETTE
-    if self.pickedPalette.get() == "Median Cut":
+
+    elif self.pickedPalette.get() == "Median Cut":
         palette = median_cut.generate(
             self.imgData, self.s_palleteOptions.get())
+
+    else:
+        raise NotImplementedError("No support for this color palette.")
+
     # dither the image
     self.imgDith = floyd_steinberg.dither(self.imgData, palette)
 

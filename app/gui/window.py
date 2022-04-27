@@ -49,9 +49,9 @@ class Window:
         self.displayedImg = None
         self.imgData = None
         self.palettes = [
+            "Bit Stripping",
             "Websafe",
-            "Median Cut",
-            "Bit Stripping"
+            "Median Cut"
         ]
         self.ditherings = [
             "Floyd-Steinberg",
