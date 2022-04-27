@@ -3,7 +3,7 @@ from app.src.colorpalette import (
     bit_stripping,
     constants
 )
-from app.src.dithering import error_diffusion
+from app.src.dithering import (error_diffusion, bayer)
 from threading import Thread
 import sys
 
@@ -88,6 +88,10 @@ def processImage(self):
     if self.pickedDithering.get() == "Error Diffusion":
         map = self.pickedDitheringOption.get()
         self.imgDith = error_diffusion.dither(self.imgData, palette, map)
+
+    elif self.pickedDithering.get() == "Bayer":
+        self.imgDith = bayer.dither(
+            self.imgData, palette, 2**self.s_ditheringOptions.get())
 
     self._processingDone()
 

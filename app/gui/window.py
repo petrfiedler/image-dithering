@@ -55,7 +55,8 @@ class Window:
             "Median Cut"
         ]
         self.ditherings = [
-            "Error Diffusion"
+            "Error Diffusion",
+            "Bayer"
         ]
 
         # initial settings

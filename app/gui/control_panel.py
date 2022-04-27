@@ -134,6 +134,28 @@ def updateDitheringPicker(self, option):
     for element in self.ditheringOptions.winfo_children():
         element.destroy()
 
+    if option == "Bayer":
+        # bayer label
+        self.l_ditheringOptions = Label(self.ditheringOptions,
+                                        text="Treshold map size:")
+        self.l_ditheringOptions.config(
+            font=('TkDefaultFont', 8),
+            bg=self.BG,
+            fg=self.FG
+        )
+        self.l_ditheringOptions.pack(
+            side="top", anchor=NW, padx=10, pady=(10, 0))
+
+        # bayer scale
+        self.s_ditheringOptions = Scale(self.ditheringOptions, from_=1, to=10)
+        self.s_ditheringOptions.set(3)
+        self.s_ditheringOptions.config(
+            length=256,
+            orient="horizontal",
+            bg=self.BG, fg=self.FG, highlightthickness=0,
+            sliderrelief="flat", activebackground=self.BG)
+        self.s_ditheringOptions.pack(side="top", anchor=NW, padx=10)
+
     if option == "Error Diffusion":
         # error diffusion label
         self.l_ditheringOptions = Label(self.ditheringOptions,
