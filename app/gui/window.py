@@ -1,13 +1,14 @@
 from tkinter import (
     Tk,
-    Frame,
-    Canvas
+    Frame
 )
 
 from app.gui import (
     file_handling,
     image_view,
     control_panel,
+    palette_picker,
+    dithering_picker,
     processing,
     styles
 )
@@ -20,6 +21,7 @@ class Window:
     _loadImage = file_handling.loadImage
     _saveImage = file_handling.saveImage
 
+    _bindCanvas = image_view.bindCanvas
     _renderImage = image_view.renderImage
     _displayImageFromArray = image_view.displayImageFromArray
     _setDefaultImgZoom = image_view.setDefaultImgZoom
@@ -29,10 +31,13 @@ class Window:
 
     _bindFileSelector = control_panel.bindFileSelector
     _bindControlPanel = control_panel.bindControlPanel
-    _bindPalettePicker = control_panel.bindPalettePicker
-    _updatePalettePicker = control_panel.updatePalettePicker
-    _bindDitheringPicker = control_panel.bindDitheringPicker
-    _updateDitheringPicker = control_panel.updateDitheringPicker
+
+    _bindPalettePicker = palette_picker.bindPalettePicker
+    _updatePalettePicker = palette_picker.updatePalettePicker
+
+    _bindDitheringPicker = dithering_picker.bindDitheringPicker
+    _updateDitheringPicker = dithering_picker.updateDitheringPicker
+
     _bindSubmit = control_panel.bindSubmit
     _bindReset = control_panel.bindReset
     _bindButtons = control_panel.bindButtons
@@ -49,15 +54,6 @@ class Window:
         # instance variables
         self.displayedImg = None
         self.imgData = None
-        self.palettes = [
-            "Bit Stripping",
-            "Websafe",
-            "Median Cut"
-        ]
-        self.ditherings = [
-            "Error Diffusion",
-            "Bayer"
-        ]
 
         # initial settings
         self.root = Tk()
@@ -96,11 +92,6 @@ class Window:
         self.rFrame.grid(row=0, column=1, sticky="nswe")
         self.rFrame.grid_columnconfigure(0, weight=1)
         self.rFrame.grid_rowconfigure(0, weight=1)
-
-    def _bindCanvas(self) -> None:
-        """ Bind canvas element to main window. """
-        self.canvas = Canvas(self.rFrame)
-        self.canvas.grid(row=0, column=0, sticky="nswe", padx=20, pady=20)
 
     def show(self) -> None:
         """ Show window with user interface. """

@@ -1,7 +1,13 @@
 import numpy as np
 from PIL import Image, ImageTk
 import math
-from tkinter import Event
+from tkinter import Event, Canvas
+
+
+def bindCanvas(self) -> None:
+    """ Bind canvas element to main window. """
+    self.canvas = Canvas(self.rFrame)
+    self.canvas.grid(row=0, column=0, sticky="nswe", padx=20, pady=20)
 
 
 def displayImageFromArray(self, imgData: np.ndarray) -> None:
