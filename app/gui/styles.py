@@ -3,6 +3,8 @@ from pathlib import Path
 
 
 def loadStyleConstants(self):
+    """ Load constants for UI styles. """
+
     # colors
     self.BG = "#444444"
     self.BG_DARKER = "#222222"
@@ -10,10 +12,16 @@ def loadStyleConstants(self):
 
     # menu indicator icons
     currentDir = Path(__file__).parent.resolve()
+
     self.imgDownArrow = PhotoImage(
-        master=self.root, file=f"{currentDir}/img/dwn.png")
+        master=self.root,
+        file=f"{currentDir}/img/dwn.png"
+    )
+
     self.imgUpArrow = PhotoImage(
-        master=self.root, file=f"{currentDir}/img/up.png")
+        master=self.root,
+        file=f"{currentDir}/img/up.png"
+    )
 
 
 def applyStyles(self):
@@ -76,6 +84,7 @@ def applyStyles(self):
         image=self.imgDownArrow,
         highlightbackground=self.BG_DARKER
     )
+
     self.om_palettePicker["menu"].config(
         bg=self.BG,
         fg=self.FG,
@@ -85,6 +94,7 @@ def applyStyles(self):
         postcommand=lambda:
             self.om_palettePicker.configure(image=self.imgUpArrow)
     )
+
     self.om_palettePicker["menu"].bind(
         '<Unmap>',
         lambda _:
@@ -111,6 +121,7 @@ def applyStyles(self):
         image=self.imgDownArrow,
         highlightbackground=self.BG_DARKER
     )
+
     self.om_ditheringPicker["menu"].config(
         bg=self.BG,
         fg=self.FG,
@@ -120,6 +131,7 @@ def applyStyles(self):
         postcommand=lambda:
             self.om_ditheringPicker.configure(image=self.imgUpArrow)
     )
+
     self.om_ditheringPicker["menu"].bind(
         '<Unmap>',
         lambda _:

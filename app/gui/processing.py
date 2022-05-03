@@ -1,75 +1,56 @@
+import numpy as np
+
+from app.src.utils.killable_thread import KThread
+
 from app.src.colorpalette import (
     median_cut,
     bit_stripping,
     constants
 )
-from app.src.dithering import (error_diffusion, bayer)
-from threading import Thread
-import numpy as np
-import sys
+
+from app.src.dithering import (
+    error_diffusion,
+    bayer
+)
 
 
-class KThread(Thread):
-    """ Modify Thread class to support killing method. """
-    # hack from: https://blog.finxter.com/how-to-kill-a-thread-in-python/
+def pressSubmit(self) -> None:
+    """ Perform actions when submit button is pressed. """
 
-    def __init__(self, *args, **kwargs):
-        Thread.__init__(self, *args, **kwargs)
-        self.killed = False
-
-    def start(self):
-        # replace the default run method
-        self.runOld = self.run
-        self.run = self.runWithTrace
-        Thread.start(self)
-
-    def runWithTrace(self):
-        sys.settrace(self.globaltrace)
-        self.runOld()
-        self.run = self.runOld
-
-    def globaltrace(self, frame, why, arg):
-        if why == 'call':
-            return self.localtrace
-        else:
-            return None
-
-    def localtrace(self, frame, why, arg):
-        if self.killed:
-            if why == 'line':
-                raise SystemExit()
-        return self.localtrace
-
-    def kill(self):
-        self.killed = True
-
-
-def pressSubmit(self):
-    # save image
+    # "save image" state:
     if self.b_submit["text"] == "Save Image":
         self._saveImage()
         return
 
-    # process image
+    # "process image" state:
+
+    # update button states
     self.b_submit["text"] = "Processing..."
     self.b_submit["state"] = "disabled"
     self.b_selectFile["state"] = "disabled"
     self.l_submit["text"] = "This might take a while."
 
+    # start processing thread
     self.process = KThread(target=self._processImage, daemon=True)
     self.process.start()
 
 
 def processingDone(self):
+    """ Actions to perform when image processing is done. """
+
+    # update button states
     self.b_selectFile["state"] = "active"
     self.b_submit["text"] = "Save Image"
     self.b_submit["state"] = "active"
     self.l_submit["text"] = "Dithering done."
 
+    # display dithered image
     self._displayImageFromArray(self.imgDith)
 
 
-def processImage(self):
+def processImage(self) -> None:
+    """ Perform image processing. """
+
     # get color palette
     if self.pickedPalette.get() == "Bit Stripping":
         palette = bit_stripping.generate(
@@ -86,11 +67,12 @@ def processImage(self):
         palette = np.array([[0, 0, 0], [255, 255, 255]], dtype=np.uint8)
 
     else:
-        raise NotImplementedError("No support for this color palette.")
+        palette = self.imgData.reshape(-1, 3)
 
-    # convert to black and white if needed
+    # copy image data
     imgToDither = np.copy(self.imgData)
 
+    # convert to black and white if needed
     if self.pickedPalette.get() == "Monochrome":
         bnw = np.average(
             imgToDither, weights=[0.299, 0.587, 0.114], axis=2)
@@ -105,16 +87,28 @@ def processImage(self):
         self.imgDith = bayer.dither(
             imgToDither, palette, 2**self.s_ditheringOptions.get())
 
+    else:
+        self.imgDith = imgToDither
+
+    # show result in the ui
     self._processingDone()
 
 
-def reset(self):
+def reset(self) -> None:
+    """ Reset processed image. """
+
+    # kill process if running
     if self.b_submit["text"] == "Processing...":
         self.process.kill()
+
+    # reset displayed image
     elif self.imgData is not None:
         self._displayImageFromArray(self.imgData)
+
     else:
         return
+
+    # reset button states
     self.b_submit["text"] = "Dither"
     self.b_submit["state"] = "active"
     self.l_submit["text"] = ""
