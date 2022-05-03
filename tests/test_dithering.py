@@ -78,7 +78,7 @@ def image_white():
 
 @pytest.fixture
 def image_oneRedPixel():
-    return np.load("tests/img/red_pixel.png")
+    return loadImg("tests/img/red_pixel.png")
 
 
 @pytest.fixture
@@ -99,9 +99,9 @@ def test_bayerOneColor(image_white, palette_websafe):
     np.testing.assert_array_equal(dithered, image_white)
 
 
-def test_bayerOnePixel(image_white, palette_websafe):
-    dithered = bayer.dither(image_white, palette_websafe, 2)
-    np.testing.assert_array_equal(dithered, image_white)
+def test_bayerOnePixel(image_oneRedPixel, palette_websafe):
+    dithered = bayer.dither(image_oneRedPixel, palette_websafe, 2)
+    np.testing.assert_array_equal(dithered, image_oneRedPixel)
 
 
 # Error diffusion dithering:
@@ -145,10 +145,10 @@ def test_errorOneColor(image_white, palette_websafe):
     np.testing.assert_array_equal(dithered, image_white)
 
 
-def test_errorOnePixel(image_white, palette_websafe):
+def test_errorOnePixel(image_oneRedPixel, palette_websafe):
     dithered = error_diffusion.dither(
-        image_white, palette_websafe, "Floyd-Steinberg")
-    np.testing.assert_array_equal(dithered, image_white)
+        image_oneRedPixel, palette_websafe, "Floyd-Steinberg")
+    np.testing.assert_array_equal(dithered, image_oneRedPixel)
 
 
 # Nearest neighbour search
