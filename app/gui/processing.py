@@ -80,8 +80,8 @@ def processImage(self) -> None:
 
     # dither the image
     if self.pickedDithering.get() == "Error Diffusion":
-        map = self.pickedDitheringOption.get()
-        self.imgDith = error_diffusion.dither(imgToDither, palette, map)
+        diffusion = self.pickedDitheringOption.get()
+        self.imgDith = error_diffusion.dither(imgToDither, palette, diffusion)
 
     elif self.pickedDithering.get() == "Bayer":
         self.imgDith = bayer.dither(

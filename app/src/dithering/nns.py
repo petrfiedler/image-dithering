@@ -14,5 +14,7 @@ def findClosestColor(pixel: np.ndarray, palette: np.ndarray,
     Returns:
         np.ndarray: closest color from the color palette
     """
+
     index = paletteTree.query(pixel)[1]
+
     return palette[index]

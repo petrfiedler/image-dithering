@@ -10,11 +10,13 @@ LOSS_COMPENSATION = (
 
 def stripper(rgb: np.ndarray, level: int) -> None:
     """ Strip one pixel by level. """
+
     for i in range(3):
         # erase last n bits (given by level)
         rgb[i] >>= level
         rgb[i] <<= level
-        # replace empty bits by constant
+
+        # replace empty bits by constant value
         rgb[i] += LOSS_COMPENSATION[i][level]
 
 
@@ -30,7 +32,14 @@ def generate(img: np.ndarray, level: int) -> np.ndarray:
     Returns:
         np.ndarray: color palette
     """
+
+    # get all pixels
     pixels = np.copy(img).reshape(-1, 3)
+
+    # strip bits from color values
     np.apply_along_axis(stripper, 1, pixels, level)
+
+    # erase duplicates
     pixels = np.unique(pixels, axis=0)
+
     return pixels
