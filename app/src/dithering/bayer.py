@@ -83,7 +83,7 @@ def dither(img: np.ndarray, palette: np.ndarray, n: int) -> np.ndarray:
     # estimated color spread in the color space with arbitrary palette
     spread = 255 / (2*math.log(palette.size, 2)/3)
 
-    img = img.astype(np.float)
+    img = img.astype(np.float64)
 
     for y in range(img.shape[0]):
         for x in range(img.shape[1]):
