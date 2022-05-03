@@ -16,7 +16,8 @@ def bindPalettePicker(self):
     self.palettes = [
         "Bit Stripping",
         "Websafe",
-        "Median Cut"
+        "Median Cut",
+        "Monochrome"
     ]
 
     separator = Separator(self.lFrame, orient='horizontal')

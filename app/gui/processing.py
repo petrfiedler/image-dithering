@@ -5,6 +5,7 @@ from app.src.colorpalette import (
 )
 from app.src.dithering import (error_diffusion, bayer)
 from threading import Thread
+import numpy as np
 import sys
 
 
@@ -81,17 +82,28 @@ def processImage(self):
         palette = median_cut.generate(
             self.imgData, self.s_palleteOptions.get())
 
+    elif self.pickedPalette.get() == "Monochrome":
+        palette = np.array([[0, 0, 0], [255, 255, 255]], dtype=np.uint8)
+
     else:
         raise NotImplementedError("No support for this color palette.")
+
+    # convert to black and white if needed
+    imgToDither = np.copy(self.imgData)
+
+    if self.pickedPalette.get() == "Monochrome":
+        bnw = np.average(
+            imgToDither, weights=[0.299, 0.587, 0.114], axis=2)
+        imgToDither = np.dstack((bnw, bnw, bnw))
 
     # dither the image
     if self.pickedDithering.get() == "Error Diffusion":
         map = self.pickedDitheringOption.get()
-        self.imgDith = error_diffusion.dither(self.imgData, palette, map)
+        self.imgDith = error_diffusion.dither(imgToDither, palette, map)
 
     elif self.pickedDithering.get() == "Bayer":
         self.imgDith = bayer.dither(
-            self.imgData, palette, 2**self.s_ditheringOptions.get())
+            imgToDither, palette, 2**self.s_ditheringOptions.get())
 
     self._processingDone()
 
